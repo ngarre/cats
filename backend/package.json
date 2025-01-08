@@ -1,0 +1,17 @@
+{
+    "name": "cats",
+    "description": "cats application",
+    "scripts": {
+        "start": "node src/app.js"
+    },
+    "author": "Natalia Garré",
+    "license": "GPL-2.0-only",
+    "dependencies": {
+        "express": "^4.21.1",
+        "cors": "^2.8.5",
+        "sqlite3": "^5.1.7",
+        "knex": "^3.1.0"
+    },
+    "version": "1.0.0",
+    "main": "src/app.js"
+}
