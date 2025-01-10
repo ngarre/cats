@@ -114,6 +114,18 @@ app.delete('/propietarios/:id', async (req, res) => { //Borrar datos de propieta
 });
 
 
+//Operación para ver los gatos de un propietario
+
+
+app.get('/propietarios/:nickname/gatos', async (req, res) => { 
+    const prop = await db('gatos').select('*').where({ propietario: req.params.nickname });
+    res.json(prop); 
+});
+
+
+
+
+
 app.listen(8080, () => {
     console.log("El backend ha iniciado en el puerto 8080");
 })
