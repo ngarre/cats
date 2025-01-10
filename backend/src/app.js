@@ -117,8 +117,8 @@ app.delete('/propietarios/:id', async (req, res) => { //Borrar datos de propieta
 //Operación para ver los gatos de un propietario
 
 
-app.get('/propietarios/:nickname/gatos', async (req, res) => { 
-    const prop = await db('gatos').select('*').where({ propietario: req.params.nickname });
+app.get('/propietarios/:id/gatos', async (req, res) => { 
+    const prop = await db('gatos').select('*').where({ id_propietario: req.params.id });
     res.json(prop); 
 });
 

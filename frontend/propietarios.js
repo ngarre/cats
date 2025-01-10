@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { el, icon, notifyOk } from './documentsUtil';
+import { el, icon, notifyOk } from './documentsUtil.js';
+
+
 
 
 window.readOwners = function () {
@@ -14,7 +16,7 @@ window.readOwners = function () {
                     '<td>' + owner.nombre + '</td>' +
                     '<td>' + owner.edad + '</td>' +
                     '<td>' + owner.nacionalidad + '</td>' +
-                    '<td> <a href="tusgatos.html?propietario=Rigoberta">Mis Gatos</a> </td>' +
+                    '<td> <a href="javascript:getOwnerCats(' + owner.id + ')">Mis Gatos</a> </td>' +
                     '<a class="btn btn-warning" href="javascript:updateOwnerForm(' + owner.id + ')">' +
                     icon('edit') //El código svg nos lo hemos llevado a documentUtil.js
                     + '</a>' +
@@ -108,4 +110,22 @@ window.closeForm = function () {
     if (formContainer) {
         formContainer.remove();
     }
+};
+
+//Movido --> Relacionado con ver los gatos de un propietario 
+window.getOwnerCats = function (id) {
+    axios.get('http://localhost:8080/propietarios/' + id +'/gatos')
+        .then((response) => {
+            const catList = response.data;
+            const catTable = el('tableBody');
+            catList.forEach(cat => {
+                const row = document.createElement('tr');
+                row.id = 'cat-' + cat.id;
+                row.innerHTML = '<td>' + cat.nombre + '</td>' +
+                    '<td>' + cat.edad + '</td>' +
+                    '<td>' + cat.raza + '</td>' +
+                    '<td>' + cat.propietario + '</td>';
+                catTable.appendChild(row);
+            })
+        });
 };

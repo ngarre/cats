@@ -2,9 +2,10 @@ import axios from 'axios';
 import { el, icon, notifyOk } from './documentsUtil';
 
 
+
 window.getOwnerCats = function (nickname) {
     console.log(nickname)
-    axios.get('http://localhost:8080/propietarios/' + nickname +'/gatos')
+    axios.get(`http://localhost:8080/propietarios/${nickname}/gatos`)
         .then((response) => {
             const catList = response.data;
             const catTable = el('tableBody');
