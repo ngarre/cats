@@ -14,6 +14,7 @@ window.readOwners = function () {
                     '<td>' + owner.nombre + '</td>' +
                     '<td>' + owner.edad + '</td>' +
                     '<td>' + owner.nacionalidad + '</td>' +
+                    '<td> <a href="tusgatos.html?propietario=Rigoberta">Mis Gatos</a> </td>' +
                     '<a class="btn btn-warning" href="javascript:updateOwnerForm(' + owner.id + ')">' +
                     icon('edit') //El código svg nos lo hemos llevado a documentUtil.js
                     + '</a>' +
