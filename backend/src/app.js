@@ -75,8 +75,8 @@ app.get('/propietarios', async (req, res) => {  //Operación para ver todos los 
     res.json(prop);
 });
 
-app.get('/propietarios/:nickname', async (req, res) => { //Operación para ver info de un propietario en concreto dado un id
-    const prop = await db('propietarios').select('*').where({ nickname: req.params.nickname }).first();
+app.get('/propietarios/:id', async (req, res) => { //Operación para ver info de un propietario en concreto dado un id
+    const prop = await db('propietarios').select('*').where({ id: req.params.id }).first();
     res.json(prop); //Devuelve la infromación del propietario cuyo id se ha proporcionado
 });
 
@@ -96,19 +96,19 @@ app.post('/propietarios', async (req, res) => {
     }
 });
 
-
-app.put('/propietarios/:nickname', async (req, res) => { //Dado un nickname concreto, modificamos los datos del propietario correspondiente
+//Aquí estaba en función de nickname en lugar de id, lo he cambiado para hacer prueba 09/01/24
+app.put('/propietarios/:id', async (req, res) => { //Dado un nickname concreto, modificamos los datos del propietario correspondiente
     await db('propietarios').update({
         nickname: req.body.nickname,
         nombre: req.body.nombre,
         edad: req.body.edad,
         nacionalidad: req.body.nacionalidad,
-    }).where({ nickname: req.params.nickname });
+    }).where({ id: req.params.id });
     res.status(200).json({});
 });
 
-app.delete('/propietarios/:nickname', async (req, res) => { //Borrar datos de propietario
-    await db('propietarios').del().where({ nickname: req.params.nickname });
+app.delete('/propietarios/:id', async (req, res) => { //Borrar datos de propietario
+    await db('propietarios').del().where({ id: req.params.id });
 
     res.status(204).json({});
 });
