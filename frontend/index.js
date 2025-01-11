@@ -10,22 +10,28 @@ window.readCats = function () {
             catList.forEach(cat => {
                 const row = document.createElement('tr');
                 row.id = 'cat-' + cat.id;
-                row.innerHTML = '<td>' + cat.nombre + '</td>' +
-                    '<td>' + cat.edad + '</td>' +
-                    '<td>' + cat.raza + '</td>' +
-                    '<td>' + cat.propietario + '</td>' +
-                    '<a class="btn btn-warning" href="javascript:updateCatForm(' + cat.id + ')">' +
-                    icon('edit') //El código svg nos lo hemos llevado a documentUtil.js
-                    + '</a>' +
-                    '<a class="btn btn-danger" href="javascript:removeCat(' + cat.id + ')">' +
-                    icon('delete') //Antes estaba aquí código svg, ahora en documentUtil.js
-                    + '</a>';
+                row.innerHTML = `
+                    <td>${cat.nombre}</td>
+                    <td>${cat.edad}</td>
+                    <td>${cat.raza}</td>
+                    <td>${cat.propietario}</td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a class="btn btn-primary btn-sm" href="javascript:updateCatForm(${cat.id})" title="Editar">
+                                ${icon('edit')}
+                            </a>
+                            <a class="btn btn-danger btn-sm" href="javascript:removeCat(${cat.id})" title="Eliminar">
+                                ${icon('delete')}
+                            </a>
+                        </div>
+                    </td>
+                `;
 
                 catTable.appendChild(row);
-            })
-
+            });
         });
 };
+
 
 window.removeCat = function (id) {
     if (confirm('¿Está seguro de que desea eliminar este gatito?')) {
@@ -43,34 +49,37 @@ window.removeCat = function (id) {
 
 
 window.updateCatForm = function (id) {
-    // Obtén los datos actuales del gato
+    //Obtengo los datos actuales del gato
     axios.get(`http://localhost:8080/gatos/${id}`).then((response) => {
         const cat = response.data;
 
-        // Crea el formulario para editar los datos
+        //Creo el formulario para editar los datos
         const formHtml = `
-            <div id="edit-cat-form" class="form-container">
-                <h3>Editar Gato</h3>
+        <div id="edit-cat-form" class="form-container" style="width: 100%; max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <h3 style="text-align: center; margin-bottom: 20px;">Editar Gato</h3>
                 <form id="cat-form">
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" value="${cat.nombre}" required>
-                    
-                    <label for="edad">Edad:</label>
-                    <input type="number" id="edad" name="edad" value="${cat.edad}" required>
-                    
-                    <label for="raza">Raza:</label>
-                    <input type="text" id="raza" name="raza" value="${cat.raza}" required>
-                    
-                    <label for="propietario">Propietario:</label>
-                    <input type="text" id="propietario" name="propietario" value="${cat.propietario}" required>
-                    
-                    <button type="button" onclick="saveCat(${id})" class="btn btn-success">Guardar</button>
-                    <button type="button" onclick="closeForm()" class="btn btn-secondary">Cancelar</button>
+                    <label for="nombre" style="display: block; margin-bottom: 8px; font-weight: bold;">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="${cat.nombre}" required style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            
+                    <label for="edad" style="display: block; margin-bottom: 8px; font-weight: bold;">Edad:</label>
+                    <input type="number" id="edad" name="edad" value="${cat.edad}" required style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            
+                    <label for="raza" style="display: block; margin-bottom: 8px; font-weight: bold;">Raza:</label>
+                    <input type="text" id="raza" name="raza" value="${cat.raza}" required style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            
+                    <label for="propietario" style="display: block; margin-bottom: 8px; font-weight: bold;">Propietario:</label>
+                    <input type="text" id="propietario" name="propietario" value="${cat.propietario}" required style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            
+                    <div style="display: flex; justify-content: space-between;">
+                        <button type="button" onclick="saveCat(${id})" style="width: 48%; padding: 10px; border: none; border-radius: 4px; background-color: #4caf50; color: white; cursor: pointer;">Guardar</button>
+                        <button type="button" onclick="closeForm()" style="width: 48%; padding: 10px; border: none; border-radius: 4px; background-color: #777; color: white; cursor: pointer;">Cancelar</button>
+                    </div>
                 </form>
-            </div>
-        `;
+        </div>
+`;
 
-        // Inserta el formulario en el DOM
+
+        //Inserto el formulario en el DOM
         const formContainer = document.getElementById('edit-cat-container') || document.createElement('div');
         formContainer.id = 'edit-cat-container';
         formContainer.innerHTML = formHtml;
@@ -79,7 +88,7 @@ window.updateCatForm = function (id) {
 };
 
 window.saveCat = function (id) {
-    // Obtengo los datos del formulario
+    //Obtengo los datos del formulario
     const form = document.getElementById('cat-form');
     const updatedCat = {
         nombre: form.nombre.value,
@@ -88,7 +97,7 @@ window.saveCat = function (id) {
         propietario: form.propietario.value
     };
 
-    // Realizo la solicitud PUT para actualizar los datos
+    //Realizo la solicitud PUT para actualizar los datos
     axios.put(`http://localhost:8080/gatos/${id}`, updatedCat)
         .then(() => {
             notifyOk('Gatito actualizado correctamente');

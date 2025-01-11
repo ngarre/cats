@@ -15,7 +15,7 @@ window.addCat = function () { //Programo lo que va a suceder cuando se clica en 
         return; // Detenemos la ejecución si el nombre está vacío
     }
 
-    // TODO Conseguir id del propietario
+    //Conseguir id del propietario
     axios.get('http://localhost:8080/propietarios/buscar/' + propietario)
     .then((response) => {
         id_propietario = response.data.id;
@@ -38,4 +38,16 @@ window.addCat = function () { //Programo lo que va a suceder cuando se clica en 
         el('propietarioReg').value = '';
     })
 
+
+
 };
+
+ //Limpiar formulario después de dar al botón limpiar
+ window.resetForm = function () {
+    el('nombre').value = '';
+    el('edad').value = '';
+    el('raza').value = '';
+    el('propietario').value = '';
+    notifyOk('Formulario limpiado');
+};
+

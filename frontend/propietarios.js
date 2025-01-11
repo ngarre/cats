@@ -12,23 +12,29 @@ window.readOwners = function () {
             ownerList.forEach(owner => {
                 const row = document.createElement('tr');
                 row.id = 'owner-' + owner.id;
-                row.innerHTML = '<td>' + owner.nickname + '</td>' +
-                    '<td>' + owner.nombre + '</td>' +
-                    '<td>' + owner.edad + '</td>' +
-                    '<td>' + owner.nacionalidad + '</td>' +
-                    '<td> <a href="javascript:getOwnerCats(' + owner.id + ')">Mis Gatos</a> </td>' +
-                    '<a class="btn btn-warning" href="javascript:updateOwnerForm(' + owner.id + ')">' +
-                    icon('edit') //El código svg nos lo hemos llevado a documentUtil.js
-                    + '</a>' +
-                    '<a class="btn btn-danger" href="javascript:removeOwner(' + owner.id + ')">' +
-                    icon('delete') //Antes estaba aquí código svg, ahora en documentUtil.js
-                    + '</a>';
+                row.innerHTML = `
+                    <td>${owner.nickname}</td>
+                    <td>${owner.nombre}</td>
+                    <td>${owner.edad}</td>
+                    <td>${owner.nacionalidad}</td>
+                    <td><a href="javascript:getOwnerCats(${owner.id})" class="btn btn-light btn-sm">Mis Gatos</a></td>
+                    <td>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a class="btn btn-primary btn-sm" href="javascript:updateOwnerForm(${owner.id})" title="Editar">
+                                ${icon('edit')}
+                            </a>
+                            <a class="btn btn-danger btn-sm" href="javascript:removeOwner(${owner.id})" title="Eliminar">
+                                ${icon('delete')}
+                            </a>
+                        </div>
+                    </td>
+                `;
 
                 ownerTable.appendChild(row);
-            })
-
+            });
         });
 };
+
 
 window.removeOwner = function (id) {
     if (confirm('¿Está seguro de que desea eliminar este perfil?')) {
@@ -46,34 +52,37 @@ window.removeOwner = function (id) {
 
 
 window.updateOwnerForm = function (id) {
-    // Obtén los datos actuales del propietario
+    //Obtengo los datos actuales del propietario
     axios.get('http://localhost:8080/propietarios/' + id).then((response) => {
         const owner = response.data;
 
-        // Crea el formulario para editar los datos
+        //Creo el formulario para editar los datos
         const formHtml = `
-            <div id="edit-owner-form" class="form-container">
-                <h3>Editar Propietario</h3>
+        <div id="edit-owner-form" class="form-container" style="width: 100%; max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <h3 style="text-align: center; margin-bottom: 20px;">Editar Propietario</h3>
                 <form id="owner-form">
-                    <label for="nickname">nickname:</label>
-                    <input type="text" id="nickname" name="nickname" value="${owner.nickname}" required>
+                <label for="nickname" style="display: block; margin-bottom: 8px; font-weight: bold;">Nickname:</label>
+                <input type="text" id="nickname" name="nickname" value="${owner.nickname}" required style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
 
-                    <label for="nombre">Nombre:</label>
-                    <input type="text" id="nombre" name="nombre" value="${owner.nombre}" required>
-                    
-                    <label for="edad">Edad:</label>
-                    <input type="number" id="edad" name="edad" value="${owner.edad}" required>
-                    
-                    <label for="nacionalidad">Nacionalidad:</label>
-                    <input type="text" id="nacionalidad" name="nacionalidad" value="${owner.nacionalidad}" required>
-                    
-                    <button type="button" onclick="saveOwner(${id})" class="btn btn-success">Guardar</button>
-                    <button type="button" onclick="closeForm()" class="btn btn-secondary">Cancelar</button>
+                <label for="nombre" style="display: block; margin-bottom: 8px; font-weight: bold;">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" value="${owner.nombre}" required style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            
+                <label for="edad" style="display: block; margin-bottom: 8px; font-weight: bold;">Edad:</label>
+                <input type="number" id="edad" name="edad" value="${owner.edad}" required style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            
+                <label for="nacionalidad" style="display: block; margin-bottom: 8px; font-weight: bold;">Nacionalidad:</label>
+                <input type="text" id="nacionalidad" name="nacionalidad" value="${owner.nacionalidad}" required style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+            
+                <div style="display: flex; justify-content: space-between;">
+                    <button type="button" onclick="saveOwner(${id})" style="width: 48%; padding: 10px; border: none; border-radius: 4px; background-color: #4caf50; color: white; cursor: pointer;">Guardar</button>
+                    <button type="button" onclick="closeForm()" style="width: 48%; padding: 10px; border: none; border-radius: 4px; background-color: #777; color: white; cursor: pointer;">Cancelar</button>
+                </div>
                 </form>
-            </div>
-        `;
+        </div>
+`;
 
-        // Inserta el formulario en el DOM
+
+        //Inserto el formulario en el DOM
         const formContainer = document.getElementById('edit-owner-container') || document.createElement('div');
         formContainer.id = 'edit-owner-container';
         formContainer.innerHTML = formHtml;
@@ -82,7 +91,7 @@ window.updateOwnerForm = function (id) {
 };
 
 window.saveOwner = function (id) {
-    // Obtengo los datos del formulario
+    //Obtengo los datos del formulario
     const form = document.getElementById('owner-form');
     const updatedOwner = {
         nickname: form.nickname.value,
@@ -91,7 +100,7 @@ window.saveOwner = function (id) {
         nacionalidad: form.nacionalidad.value,
     };
 
-    // Realizo la solicitud PUT para actualizar los datos
+    //Realizo la solicitud PUT para actualizar los datos
     axios.put(`http://localhost:8080/propietarios/${id}`, updatedOwner)
         .then(() => {
             notifyOk('Propietario actualizado correctamente');
@@ -117,14 +126,14 @@ window.getOwnerCats = function (id) {
         .then((response) => {
             const catList = response.data;
 
-            // Busca el contenedor principal
+            //Busca el contenedor principal
             const container = document.querySelector('.container');
             if (!container) {
                 console.error('No se encontró el contenedor con clase "container".');
                 return;
             }
 
-            // Busca o crea un contenedor específico dentro de "container"
+            //Busca o crea un contenedor específico dentro de "container"
             let catContainer = document.getElementById('cat-container');
             if (!catContainer) {
                 catContainer = document.createElement('div');
@@ -132,19 +141,19 @@ window.getOwnerCats = function (id) {
                 container.appendChild(catContainer);
             }
 
-            // Limpia cualquier contenido previo en el contenedor
+            //Limpia cualquier contenido previo en el contenedor
             catContainer.innerHTML = '';
 
-            // Agrega el título
+            //Agrega el título
             const title = document.createElement('h2');
             title.textContent = 'Mis gatos';
             catContainer.appendChild(title);
 
-            // Crea la tabla
+            //Crea la tabla
             const table = document.createElement('table');
             table.className = 'table';
 
-            // Crea el encabezado de la tabla
+            //Crea el encabezado de la tabla
             const thead = document.createElement('thead');
             thead.innerHTML = `
                 <tr>
@@ -156,7 +165,7 @@ window.getOwnerCats = function (id) {
             `;
             table.appendChild(thead);
 
-            // Crea el cuerpo de la tabla
+            //Crea el cuerpo de la tabla
             const tbody = document.createElement('tbody');
             catList.forEach(cat => {
                 const row = document.createElement('tr');
@@ -171,7 +180,7 @@ window.getOwnerCats = function (id) {
             });
             table.appendChild(tbody);
 
-            // Agrega la tabla al contenedor
+            //Agrega la tabla al contenedor
             catContainer.appendChild(table);
         })
         .catch(error => {

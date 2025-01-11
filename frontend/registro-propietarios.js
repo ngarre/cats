@@ -9,7 +9,7 @@ window.addOwner = function () { //Programo lo que va a suceder cuando se clica e
     const nacionalidad = el('nacionalidadReg').value;
 
 
-    //TO DO Validación de los datos que introduce el usuario
+    //Validación de los datos que introduce el usuario
     if (nickname === '') {
         notifyError('El nickname es un campo obligatorio');
         return; // Detenemos la ejecución si el nombre está vacío
@@ -32,4 +32,13 @@ window.addOwner = function () { //Programo lo que va a suceder cuando se clica e
     el('edadReg').value = '';
     el('nacionalidadReg').value = '';
 
+};
+
+ //Limpiar formulario después de dar al botón limpiar
+ window.resetForm = function () {
+    el('nickname').value = '';
+    el('nombre').value = '';
+    el('edad').value = '';
+    el('nacionalidad').value = '';
+    notifyOk('Formulario limpiado');
 };

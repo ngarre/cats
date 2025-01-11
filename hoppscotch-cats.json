@@ -1,0 +1,235 @@
+[
+  {
+    "v": 5,
+    "name": "API Trabajo Nata",
+    "folders": [],
+    "requests": [
+      {
+        "v": "10",
+        "name": "/gatos",
+        "method": "GET",
+        "endpoint": "http://localhost:8080/gatos",
+        "params": [],
+        "headers": [],
+        "preRequestScript": "",
+        "testScript": "",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "body": {
+          "contentType": "application/json",
+          "body": "{\n  \"nombre\": \"\"\n}"
+        },
+        "requestVariables": [],
+        "responses": {}
+      },
+      {
+        "v": "10",
+        "name": "/gatos",
+        "method": "POST",
+        "endpoint": "http://localhost:8080/gatos",
+        "params": [],
+        "headers": [],
+        "preRequestScript": "",
+        "testScript": "",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "body": {
+          "contentType": "application/json",
+          "body": "{\n  \"nombre\": \"gatoso\"\n}"
+        },
+        "requestVariables": [],
+        "responses": {}
+      },
+      {
+        "v": "10",
+        "name": "/gatos/:id",
+        "method": "GET",
+        "endpoint": "http://localhost:8080/gatos/1",
+        "params": [],
+        "headers": [],
+        "preRequestScript": "",
+        "testScript": "",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "body": {
+          "contentType": null,
+          "body": null
+        },
+        "requestVariables": [],
+        "responses": {}
+      },
+      {
+        "v": "10",
+        "name": "/gatos/:id",
+        "method": "PUT",
+        "endpoint": "http://localhost:8080/gatos/1",
+        "params": [],
+        "headers": [],
+        "preRequestScript": "",
+        "testScript": "",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "body": {
+          "contentType": "application/json",
+          "body": "{\n    \"nombre\": \"frijolito\",\n    \"edad\": \"3\",\n    \"raza\": \"locuelo\",\n    \"propietario\": \"kdk\"\n  }"
+        },
+        "requestVariables": [],
+        "responses": {}
+      },
+      {
+        "v": "10",
+        "name": "/gatos/:id",
+        "method": "DELETE",
+        "endpoint": "http://localhost:8080/gatos/1",
+        "params": [],
+        "headers": [],
+        "preRequestScript": "",
+        "testScript": "",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "body": {
+          "contentType": "application/json",
+          "body": ""
+        },
+        "requestVariables": [],
+        "responses": {}
+      },
+      {
+        "v": "10",
+        "name": "/propietarios",
+        "method": "GET",
+        "endpoint": "http://localhost:8080/propietarios",
+        "params": [],
+        "headers": [],
+        "preRequestScript": "",
+        "testScript": "",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "body": {
+          "contentType": null,
+          "body": null
+        },
+        "requestVariables": [],
+        "responses": {}
+      },
+      {
+        "v": "10",
+        "name": "/propietarios",
+        "method": "POST",
+        "endpoint": "http://localhost:8080/propietarios",
+        "params": [],
+        "headers": [],
+        "preRequestScript": "",
+        "testScript": "",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "body": {
+          "contentType": "application/json",
+          "body": "{\n  \"nickname\": \"pesadilla\"\n}"
+        },
+        "requestVariables": [],
+        "responses": {}
+      },
+      {
+        "v": "10",
+        "endpoint": "http://localhost:8080/propietarios/8/gatos",
+        "name": "/propietarios/:id",
+        "params": [],
+        "headers": [],
+        "method": "GET",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "preRequestScript": "",
+        "testScript": "",
+        "body": {
+          "contentType": null,
+          "body": null
+        },
+        "requestVariables": [],
+        "responses": {}
+      },
+      {
+        "v": "10",
+        "name": "/propietarios/:id",
+        "method": "PUT",
+        "endpoint": "http://localhost:8080/propietarios/7",
+        "params": [],
+        "headers": [],
+        "preRequestScript": "",
+        "testScript": "",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "body": {
+          "contentType": "application/json",
+          "body": "{\n    \"nombre\": \"mamarracho\",\n    \"edad\": \"3\",\n    \"nacionalidad\": \"locuelo\"\n  }"
+        },
+        "requestVariables": [],
+        "responses": {}
+      },
+      {
+        "v": "10",
+        "name": "/propietarios/:id",
+        "method": "DELETE",
+        "endpoint": "http://localhost:8080/propietarios/6",
+        "params": [],
+        "headers": [],
+        "preRequestScript": "",
+        "testScript": "",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "body": {
+          "contentType": null,
+          "body": null
+        },
+        "requestVariables": [],
+        "responses": {}
+      },
+      {
+        "v": "10",
+        "endpoint": "http://localhost:8080/propietarios/8/gatos",
+        "name": "/propietarios/:id/gatos",
+        "params": [],
+        "headers": [],
+        "method": "GET",
+        "auth": {
+          "authType": "inherit",
+          "authActive": true
+        },
+        "preRequestScript": "",
+        "testScript": "",
+        "body": {
+          "contentType": null,
+          "body": null
+        },
+        "requestVariables": [],
+        "responses": {}
+      }
+    ],
+    "auth": {
+      "authType": "none",
+      "authActive": true
+    },
+    "headers": [],
+    "_ref_id": "coll_m5s3u50j_4480f02d-691d-468d-a198-5c02606d2731"
+  }
+]

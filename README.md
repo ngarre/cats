@@ -23,3 +23,6 @@ Ejecuta dentro del `backend`: `npm start`
 
 ### Lanzar el frontend 
 Ejecuta dentro del `frontend`: `npm start`
+
+
+[Documentación](https://github.com/ngarre/cats.wiki.git)

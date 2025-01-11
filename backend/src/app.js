@@ -18,6 +18,8 @@ const db = knex({
     useNullAsDefault: true //Devuelve valor nulo para aquello que no tenga datos
 });
 
+
+
 //------------------CRUD GATOS (4 OPERACIONES BÁSICAS: registrar, visualizar, editar y eliminar)---------------------------------------
 
 app.get('/gatos', async (req, res) => {  //Operación para ver todos los gatos que hay en la BBDD
@@ -69,6 +71,9 @@ app.delete('/gatos/:id', async (req, res) => { //Borrar gatos :c
     res.status(204).json({});
 });
 
+
+
+
 //------------------------------------------CRUD PROPIETARIOS------------------------------------------------------------
 
 app.get('/propietarios', async (req, res) => {  //Operación para ver todos los propietarios que hay en la BBDD
@@ -82,33 +87,33 @@ app.get('/propietarios/:id', async (req, res) => { //Operación para ver info de
 });
 
 app.get('/propietarios/buscar/:nickname', async (req, res) => { //Operación para ver info de un propietario en concreto dado un id
-    const prop = await db('propietarios').select('*').where({ nickname: req.params.nickname }).first();
-    res.json(prop); //Devuelve la infromación del propietario cuyo nickname se ha proporcionado
+    const prop = await db('propietarios').select('*').where({ nickname: req.params.nickname }).first(); //Esto realmente podría sobrar ya que el parametro de nickname es UNIQUE, pero no está demás como medida de seguridad
+    res.json(prop); //Devuelve la información del propietario cuyo nickname se ha proporcionado
 });
 
 app.post('/propietarios', [check('nickname').notEmpty().withMessage('El nickname del usuario es obligatorio')], async (req, res) => {
     try {
-        // Verificar si hay errores de validación
+        //Verifico si hay errores de validación
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        // Operación para dar de alta propietarios en la BBDD
+        //Operación para dar de alta propietarios en la BBDD
         await db('propietarios').insert({
             nickname: req.body.nickname,
             nombre: req.body.nombre,
             edad: req.body.edad,
             nacionalidad: req.body.nacionalidad,
         });
-        res.status(201).json({ message: 'Te has registrado exitosamente' }); // Respuesta exitosa
+        res.status(201).json({ message: 'Te has registrado exitosamente' }); //Respuesta exitosa
     } catch (error) {
         console.error('Error de registro:', error); // Log del error en la consola
-        res.status(500).json({ error: 'Ocurrió un error al registrar', details: error.message }); // Respuesta con error
+        res.status(500).json({ error: 'Ocurrió un error al registrar', details: error.message }); //Respuesta con error
     }
 });
 
-//Aquí estaba en función de nickname en lugar de id, lo he cambiado para hacer prueba 09/01/24
+
 app.put('/propietarios/:id', async (req, res) => { //Dado un nickname concreto, modificamos los datos del propietario correspondiente
     await db('propietarios').update({
         nickname: req.body.nickname,
@@ -127,8 +132,6 @@ app.delete('/propietarios/:id', async (req, res) => { //Borrar datos de propieta
 
 
 //Operación para ver los gatos de un propietario
-
-
 app.get('/propietarios/:id/gatos', async (req, res) => { 
     const prop = await db('gatos').select('*').where({ id_propietario: req.params.id });
     res.json(prop); 
@@ -136,7 +139,7 @@ app.get('/propietarios/:id/gatos', async (req, res) => {
 
 
 
-
+//--------------------Abro un servidor en el puerto 8080-------------------------------------
 
 app.listen(8080, () => {
     console.log("El backend ha iniciado en el puerto 8080");
