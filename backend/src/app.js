@@ -2,6 +2,7 @@
 const express = require('express'); //Framework web para Node.js que te permite crear servidores de manera rápida
 const cors = require('cors'); //Controla políticas de acceso de tu servidor, en este caso Express
 const knex = require('knex'); //Librería de JavaScript para Node.js que sirve como un constructor de consultas SQL
+const { check, validationResult } = require('express-validator');
 
 //Lanzar las aplicaciones de las liberías
 const app = express();
@@ -17,9 +18,6 @@ const db = knex({
     useNullAsDefault: true //Devuelve valor nulo para aquello que no tenga datos
 });
 
-
-
-
 //------------------CRUD GATOS (4 OPERACIONES BÁSICAS: registrar, visualizar, editar y eliminar)---------------------------------------
 
 app.get('/gatos', async (req, res) => {  //Operación para ver todos los gatos que hay en la BBDD
@@ -32,14 +30,21 @@ app.get('/gatos/:id', async (req, res) => { //Operación para ver info de un gat
     res.json(cats); //Devuelve la infromación del gato cuyo id se ha proporcionado
 });
 
-app.post('/gatos', async (req, res) => {
+app.post('/gatos', [check('nombre').notEmpty().withMessage('El nombre del gatito es obligatorio')], async (req, res) => {
     try {
+        // Verificar si hay errores de validación
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         // Operación para dar de alta gatos en la BBDD
         await db('gatos').insert({
             nombre: req.body.nombre,
             edad: req.body.edad,
             raza: req.body.raza,
-            propietario: req.body.propietario
+            propietario: req.body.propietario,
+            id_propietario: req.body.id_propietario,
         });
         res.status(201).json({ message: 'Gatito registrado exitosamente' }); // Respuesta exitosa
     } catch (error) {
@@ -47,7 +52,6 @@ app.post('/gatos', async (req, res) => {
         res.status(500).json({ error: 'Ocurrió un error al registrar al gatito', details: error.message }); // Respuesta con error
     }
 });
-
 
 app.put('/gatos/:id', async (req, res) => { //Dado un id concreto, modificamos los datos del gato correspondiente
     await db('gatos').update({
@@ -65,9 +69,6 @@ app.delete('/gatos/:id', async (req, res) => { //Borrar gatos :c
     res.status(204).json({});
 });
 
-
-
-
 //------------------------------------------CRUD PROPIETARIOS------------------------------------------------------------
 
 app.get('/propietarios', async (req, res) => {  //Operación para ver todos los propietarios que hay en la BBDD
@@ -80,8 +81,19 @@ app.get('/propietarios/:id', async (req, res) => { //Operación para ver info de
     res.json(prop); //Devuelve la infromación del propietario cuyo id se ha proporcionado
 });
 
-app.post('/propietarios', async (req, res) => {
+app.get('/propietarios/buscar/:nickname', async (req, res) => { //Operación para ver info de un propietario en concreto dado un id
+    const prop = await db('propietarios').select('*').where({ nickname: req.params.nickname }).first();
+    res.json(prop); //Devuelve la infromación del propietario cuyo nickname se ha proporcionado
+});
+
+app.post('/propietarios', [check('nickname').notEmpty().withMessage('El nickname del usuario es obligatorio')], async (req, res) => {
     try {
+        // Verificar si hay errores de validación
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         // Operación para dar de alta propietarios en la BBDD
         await db('propietarios').insert({
             nickname: req.body.nickname,
@@ -112,6 +124,18 @@ app.delete('/propietarios/:id', async (req, res) => { //Borrar datos de propieta
 
     res.status(204).json({});
 });
+
+
+//Operación para ver los gatos de un propietario
+
+
+app.get('/propietarios/:id/gatos', async (req, res) => { 
+    const prop = await db('gatos').select('*').where({ id_propietario: req.params.id });
+    res.json(prop); 
+});
+
+
+
 
 
 app.listen(8080, () => {

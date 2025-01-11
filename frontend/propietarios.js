@@ -1,5 +1,7 @@
 import axios from 'axios';
-import { el, icon, notifyOk } from './documentsUtil';
+import { el, icon, notifyOk } from './documentsUtil.js';
+
+
 
 
 window.readOwners = function () {
@@ -14,6 +16,7 @@ window.readOwners = function () {
                     '<td>' + owner.nombre + '</td>' +
                     '<td>' + owner.edad + '</td>' +
                     '<td>' + owner.nacionalidad + '</td>' +
+                    '<td> <a href="javascript:getOwnerCats(' + owner.id + ')">Mis Gatos</a> </td>' +
                     '<a class="btn btn-warning" href="javascript:updateOwnerForm(' + owner.id + ')">' +
                     icon('edit') //El código svg nos lo hemos llevado a documentUtil.js
                     + '</a>' +
@@ -107,4 +110,72 @@ window.closeForm = function () {
     if (formContainer) {
         formContainer.remove();
     }
+};
+
+window.getOwnerCats = function (id) {
+    axios.get('http://localhost:8080/propietarios/' + id + '/gatos')
+        .then((response) => {
+            const catList = response.data;
+
+            // Busca el contenedor principal
+            const container = document.querySelector('.container');
+            if (!container) {
+                console.error('No se encontró el contenedor con clase "container".');
+                return;
+            }
+
+            // Busca o crea un contenedor específico dentro de "container"
+            let catContainer = document.getElementById('cat-container');
+            if (!catContainer) {
+                catContainer = document.createElement('div');
+                catContainer.id = 'cat-container';
+                container.appendChild(catContainer);
+            }
+
+            // Limpia cualquier contenido previo en el contenedor
+            catContainer.innerHTML = '';
+
+            // Agrega el título
+            const title = document.createElement('h2');
+            title.textContent = 'Mis gatos';
+            catContainer.appendChild(title);
+
+            // Crea la tabla
+            const table = document.createElement('table');
+            table.className = 'table';
+
+            // Crea el encabezado de la tabla
+            const thead = document.createElement('thead');
+            thead.innerHTML = `
+                <tr>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Raza</th>
+                    <th>Propietario</th>
+                </tr>
+            `;
+            table.appendChild(thead);
+
+            // Crea el cuerpo de la tabla
+            const tbody = document.createElement('tbody');
+            catList.forEach(cat => {
+                const row = document.createElement('tr');
+                row.id = 'cat-' + cat.id;
+                row.innerHTML = `
+                    <td>${cat.nombre}</td>
+                    <td>${cat.edad}</td>
+                    <td>${cat.raza}</td>
+                    <td>${cat.propietario}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+
+            // Agrega la tabla al contenedor
+            catContainer.appendChild(table);
+        })
+        .catch(error => {
+            console.error('Error al obtener los gatos:', error);
+            alert('Ocurrió un error al obtener los gatos.');
+        });
 };

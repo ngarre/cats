@@ -1,7 +1,7 @@
 # cats
                 Arquitectura en 3 capas: BBDD, Backend (API) + Frontend
 
-Este es un proyecto para gestinoar una base de datos de gatos, sus dueños y las razas de los gatos.
+Este es un proyecto para gestinoar una base de datos de gatos y sus dueños.
 Se compone de un frontend que se comunica con una API que gestiona la BBDD permitiendo realizar las operaciones CRUD sobre los diferentes elementos de la BBDD.
 
                                  BBDD --> API REST --> FRONTEND
