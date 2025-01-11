@@ -112,20 +112,70 @@ window.closeForm = function () {
     }
 };
 
-//Movido --> Relacionado con ver los gatos de un propietario 
 window.getOwnerCats = function (id) {
-    axios.get('http://localhost:8080/propietarios/' + id +'/gatos')
+    axios.get('http://localhost:8080/propietarios/' + id + '/gatos')
         .then((response) => {
             const catList = response.data;
-            const catTable = el('tableBody');
+
+            // Busca el contenedor principal
+            const container = document.querySelector('.container');
+            if (!container) {
+                console.error('No se encontró el contenedor con clase "container".');
+                return;
+            }
+
+            // Busca o crea un contenedor específico dentro de "container"
+            let catContainer = document.getElementById('cat-container');
+            if (!catContainer) {
+                catContainer = document.createElement('div');
+                catContainer.id = 'cat-container';
+                container.appendChild(catContainer);
+            }
+
+            // Limpia cualquier contenido previo en el contenedor
+            catContainer.innerHTML = '';
+
+            // Agrega el título
+            const title = document.createElement('h2');
+            title.textContent = 'Mis gatos';
+            catContainer.appendChild(title);
+
+            // Crea la tabla
+            const table = document.createElement('table');
+            table.className = 'table';
+
+            // Crea el encabezado de la tabla
+            const thead = document.createElement('thead');
+            thead.innerHTML = `
+                <tr>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>Raza</th>
+                    <th>Propietario</th>
+                </tr>
+            `;
+            table.appendChild(thead);
+
+            // Crea el cuerpo de la tabla
+            const tbody = document.createElement('tbody');
             catList.forEach(cat => {
                 const row = document.createElement('tr');
                 row.id = 'cat-' + cat.id;
-                row.innerHTML = '<td>' + cat.nombre + '</td>' +
-                    '<td>' + cat.edad + '</td>' +
-                    '<td>' + cat.raza + '</td>' +
-                    '<td>' + cat.propietario + '</td>';
-                catTable.appendChild(row);
-            })
+                row.innerHTML = `
+                    <td>${cat.nombre}</td>
+                    <td>${cat.edad}</td>
+                    <td>${cat.raza}</td>
+                    <td>${cat.propietario}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+
+            // Agrega la tabla al contenedor
+            catContainer.appendChild(table);
+        })
+        .catch(error => {
+            console.error('Error al obtener los gatos:', error);
+            alert('Ocurrió un error al obtener los gatos.');
         });
 };

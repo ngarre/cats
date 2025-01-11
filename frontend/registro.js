@@ -6,6 +6,7 @@ window.addCat = function () { //Programo lo que va a suceder cuando se clica en 
     const edad = el('edadReg').value;
     const raza = el('razaReg').value;
     const propietario = el('propietarioReg').value;
+    let id_propietario;
 
 
     //TO DO Validación de los datos que introduce el usuario
@@ -14,21 +15,27 @@ window.addCat = function () { //Programo lo que va a suceder cuando se clica en 
         return; // Detenemos la ejecución si el nombre está vacío
     }
 
+    // TODO Conseguir id del propietario
+    axios.get('http://localhost:8080/propietarios/buscar/' + propietario)
+    .then((response) => {
+        id_propietario = response.data.id;
 
-    axios.post('http://localhost:8080/gatos', {
-        nombre: nombre,
-        edad: edad,
-        raza: raza,
-        propietario: propietario
-    });
+        axios.post('http://localhost:8080/gatos', {
+            nombre: nombre,
+            edad: edad,
+            raza: raza,
+            propietario: propietario,
+            id_propietario: id_propietario
+        });
 
-    //Decir al usuario si la entrada ha tenido lugar
-    notifyOk('Gatito registrado');
+        //Decir al usuario si la entrada ha tenido lugar
+        notifyOk('Gatito registrado');
 
-    //Limpiar el formulario después de registrar nueva entrada:
-    el('nombreReg').value = '';
-    el('edadReg').value = '';
-    el('razaReg').value = '';
-    el('propietarioReg').value = '';
+        //Limpiar el formulario después de registrar nueva entrada:
+        el('nombreReg').value = '';
+        el('edadReg').value = '';
+        el('razaReg').value = '';
+        el('propietarioReg').value = '';
+    })
 
 };

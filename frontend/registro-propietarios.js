@@ -10,8 +10,8 @@ window.addOwner = function () { //Programo lo que va a suceder cuando se clica e
 
 
     //TO DO Validación de los datos que introduce el usuario
-    if (nombre === '') {
-        notifyError('El nombre es un campo obligatorio');
+    if (nickname === '') {
+        notifyError('El nickname es un campo obligatorio');
         return; // Detenemos la ejecución si el nombre está vacío
     }
 

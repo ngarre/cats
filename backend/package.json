@@ -7,10 +7,11 @@
     "author": "Natalia Garré",
     "license": "GPL-2.0-only",
     "dependencies": {
-        "express": "^4.21.1",
         "cors": "^2.8.5",
-        "sqlite3": "^5.1.7",
-        "knex": "^3.1.0"
+        "express": "^4.21.1",
+        "express-validator": "^7.2.1",
+        "knex": "^3.1.0",
+        "sqlite3": "^5.1.7"
     },
     "version": "1.0.0",
     "main": "src/app.js"
