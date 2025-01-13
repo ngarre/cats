@@ -107,19 +107,19 @@
         <!-- Formulario de registro -->
         <form id="owner-form">
             <label for="nickname">Nickname:</label>
-            <input type="text" id="nickname" name="nickname" required>
+            <input type="text" id="nicknameReg" name="nickname" required>
 
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
+            <input type="text" id="nombreReg" name="nombre" required>
 
             <label for="edad">Edad:</label>
-            <input type="number" id="edad" name="edad" required>
+            <input type="number" id="edadReg" name="edad" required>
 
             <label for="nacionalidad">Nacionalidad:</label>
-            <input type="text" id="nacionalidad" name="nacionalidad" required>
+            <input type="text" id="nacionalidadReg" name="nacionalidad" required>
 
             <div class="button-container">
-                <button type="button" onclick="saveOwner()" class="btn btn-success">Guardar</button>
+                <button type="button" onclick="addOwner()" class="btn btn-success">Guardar</button>
                 <button type="button" onclick="resetForm()" class="btn btn-secondary">Limpiar</button>
             </div>
         </form>
