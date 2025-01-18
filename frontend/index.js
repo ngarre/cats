@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { el, icon, notifyOk } from './documentsUtil';
+import { el, icon, notifyOk, notifyError } from './documentsUtil';
 
 
 window.readCats = function () {
@@ -80,16 +80,24 @@ window.updateCatForm = function (id) {
 
 
         //Inserto el formulario en el DOM
-        const formContainer = document.getElementById('edit-cat-container') || document.createElement('div');
-        formContainer.id = 'edit-cat-container';
-        formContainer.innerHTML = formHtml;
-        document.body.appendChild(formContainer);
+        const formContainer = el('edit-cat-container') || document.createElement('div'); //Mete en la variable formContainer el objeto que tenga ese identificador o crea un objeto de tipo div
+        formContainer.id = 'edit-cat-container'; // Establece al div el id
+        formContainer.innerHTML = formHtml; // En el interior del div metemos el contenido de la variable formHtml (líneas 58 a 78)
+        document.body.appendChild(formContainer); //Este formulario se queda pegado justo al final del body del html
     });
+
+
 };
 
 window.saveCat = function (id) {
     //Obtengo los datos del formulario
-    const form = document.getElementById('cat-form');
+    const form = el('cat-form');
+
+    if (form.nombre.value === '') {
+        notifyError('El nombre es un campo obligatorio');
+        return; // Detenemos la ejecución si el nombre está vacío
+    }
+
     const updatedCat = {
         nombre: form.nombre.value,
         edad: form.edad.value,
@@ -112,7 +120,7 @@ window.saveCat = function (id) {
 };
 
 window.closeForm = function () {
-    const formContainer = document.getElementById('edit-cat-container');
+    const formContainer = el('edit-cat-container');
     if (formContainer) {
         formContainer.remove();
     }

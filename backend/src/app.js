@@ -33,8 +33,8 @@ app.get('/gatos/:id', async (req, res) => { //Operación para ver info de un gat
 });
 
 app.post('/gatos', [check('nombre').notEmpty().withMessage('El nombre del gatito es obligatorio')], async (req, res) => {
-    try {
-        // Verificar si hay errores de validación
+    try { // Con el try-catch nos aseguramos de controlar errores en caso de problema de conexión a la BBDD
+        // Verificar si hay errores de validación relacionadas con que elusuario deje vació el campo
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
@@ -55,14 +55,25 @@ app.post('/gatos', [check('nombre').notEmpty().withMessage('El nombre del gatito
     }
 });
 
-app.put('/gatos/:id', async (req, res) => { //Dado un id concreto, modificamos los datos del gato correspondiente
-    await db('gatos').update({
-        nombre: req.body.nombre,
-        edad: req.body.edad,
-        raza: req.body.raza,
-        propietario: req.body.propietario
-    }).where({ id: req.params.id });
-    res.status(200).json({});
+app.put('/gatos/:id', [check('nombre').notEmpty().withMessage('El nombre del gatito es obligatorio')], async (req, res) => { //Dado un id concreto, modificamos los datos del gato correspondiente
+    try {
+        // Verificar si hay errores de validación
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        await db('gatos').update({
+            nombre: req.body.nombre,
+            edad: req.body.edad,
+            raza: req.body.raza,
+            propietario: req.body.propietario
+        }).where({ id: req.params.id });
+        res.status(200).json({});
+    } catch (error) {
+        console.error('Error al actualizar al gatito:', error); // Log del error en la consola
+        res.status(500).json({ error: 'Ocurrió un error al actualizar al gatito', details: error.message }); // Respuesta con error
+    }
 });
 
 app.delete('/gatos/:id', async (req, res) => { //Borrar gatos :c
@@ -114,14 +125,26 @@ app.post('/propietarios', [check('nickname').notEmpty().withMessage('El nickname
 });
 
 
-app.put('/propietarios/:id', async (req, res) => { //Dado un nickname concreto, modificamos los datos del propietario correspondiente
-    await db('propietarios').update({
-        nickname: req.body.nickname,
-        nombre: req.body.nombre,
-        edad: req.body.edad,
-        nacionalidad: req.body.nacionalidad,
-    }).where({ id: req.params.id });
-    res.status(200).json({});
+app.put('/propietarios/:id', [check('nickname').notEmpty().withMessage('El nickname del usuario es obligatorio')], async (req, res) => { //Dado un id concreto, modificamos los datos del propietario correspondiente
+    try {
+        //Verifico si hay errores de validación
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        await db('propietarios').update({
+            nickname: req.body.nickname,
+            nombre: req.body.nombre,
+            edad: req.body.edad,
+            nacionalidad: req.body.nacionalidad,
+        }).where({ id: req.params.id });
+        res.status(200).json({});
+
+    } catch (error) {
+        console.error('Error de registro:', error); // Log del error en la consola
+        res.status(500).json({ error: 'Ocurrió un error al registrar', details: error.message }); //Respuesta con error
+    }
 });
 
 app.delete('/propietarios/:id', async (req, res) => { //Borrar datos de propietario
@@ -132,9 +155,9 @@ app.delete('/propietarios/:id', async (req, res) => { //Borrar datos de propieta
 
 
 //Operación para ver los gatos de un propietario
-app.get('/propietarios/:id/gatos', async (req, res) => { 
+app.get('/propietarios/:id/gatos', async (req, res) => {
     const prop = await db('gatos').select('*').where({ id_propietario: req.params.id });
-    res.json(prop); 
+    res.json(prop);
 });
 
 

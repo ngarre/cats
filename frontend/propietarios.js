@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { el, icon, notifyOk } from './documentsUtil.js';
+import { el, icon, notifyOk, notifyError } from './documentsUtil.js';
 
 
 
@@ -83,16 +83,22 @@ window.updateOwnerForm = function (id) {
 
 
         //Inserto el formulario en el DOM
-        const formContainer = document.getElementById('edit-owner-container') || document.createElement('div');
-        formContainer.id = 'edit-owner-container';
-        formContainer.innerHTML = formHtml;
-        document.body.appendChild(formContainer);
+        const formContainer = el('edit-owner-container') || document.createElement('div'); //Mete en la variable formContainer el objeto que tenga ese identificador o crea un objeto de tipo div
+        formContainer.id = 'edit-owner-container'; // Establece al div el id
+        formContainer.innerHTML = formHtml; // En el interior del div metemos el contenido de la variable formHtml (líneas 61 a 81)
+        document.body.appendChild(formContainer); //Este formulario se queda pegado justo al final del body del html
     });
 };
 
 window.saveOwner = function (id) {
     //Obtengo los datos del formulario
-    const form = document.getElementById('owner-form');
+    const form = el('owner-form');
+
+    if (form.nickname.value === '') {
+        notifyError('El nickname es un campo obligatorio');
+        return; // Detenemos la ejecución si el nombre está vacío
+    }
+
     const updatedOwner = {
         nickname: form.nickname.value,
         nombre: form.nombre.value,
@@ -115,7 +121,7 @@ window.saveOwner = function (id) {
 };
 
 window.closeForm = function () {
-    const formContainer = document.getElementById('edit-owner-container');
+    const formContainer = el('edit-owner-container');
     if (formContainer) {
         formContainer.remove();
     }
@@ -134,7 +140,7 @@ window.getOwnerCats = function (id) {
             }
 
             //Busca o crea un contenedor específico dentro de "container"
-            let catContainer = document.getElementById('cat-container');
+            let catContainer = el('cat-container');
             if (!catContainer) {
                 catContainer = document.createElement('div');
                 catContainer.id = 'cat-container';

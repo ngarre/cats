@@ -16,7 +16,7 @@ window.addCat = function () { //Programo lo que va a suceder cuando se clica en 
     }
 
     //Conseguir id del propietario
-    axios.get('http://localhost:8080/propietarios/buscar/' + propietario)
+    axios.get('http://localhost:8080/propietarios/buscar/' + propietario) //Vamos al endopoint que está en la línea 89 de app.js en el backend para pasarle el nickname del propietario
     .then((response) => {
         id_propietario = response.data.id;
 
