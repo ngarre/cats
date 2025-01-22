@@ -16,7 +16,7 @@ window.addCat = function () { //Programo lo que va a suceder cuando se clica en 
     }
 
     //Conseguir id del propietario
-    axios.get('http://localhost:8080/propietarios/buscar/' + propietario) //Vamos al endopoint que está en la línea 89 de app.js en el backend para pasarle el nickname del propietario
+    axios.get('http://localhost:8080/propietarios/buscar/' + propietario) //Vamos al endopoint que está en la línea 100 de app.js en el backend para pasarle el nickname del propietario
     .then((response) => {
         id_propietario = response.data.id;
 
@@ -44,10 +44,10 @@ window.addCat = function () { //Programo lo que va a suceder cuando se clica en 
 
  //Limpiar formulario después de dar al botón limpiar
  window.resetForm = function () {
-    el('nombre').value = '';
-    el('edad').value = '';
-    el('raza').value = '';
-    el('propietario').value = '';
+    el('nombreReg').value = '';
+    el('edadReg').value = '';
+    el('razaReg').value = '';
+    el('propietarioReg').value = '';
     notifyOk('Formulario limpiado');
 };
 

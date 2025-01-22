@@ -36,9 +36,9 @@ window.addOwner = function () { //Programo lo que va a suceder cuando se clica e
 
  //Limpiar formulario después de dar al botón limpiar
  window.resetForm = function () {
-    el('nickname').value = '';
-    el('nombre').value = '';
-    el('edad').value = '';
-    el('nacionalidad').value = '';
+    el('nicknameReg').value = '';
+    el('nombreReg').value = '';
+    el('edadReg').value = '';
+    el('nacionalidadReg').value = '';
     notifyOk('Formulario limpiado');
 };

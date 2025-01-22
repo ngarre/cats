@@ -97,7 +97,7 @@ app.get('/propietarios/:id', async (req, res) => { //Operación para ver info de
     res.json(prop); //Devuelve la infromación del propietario cuyo id se ha proporcionado
 });
 
-app.get('/propietarios/buscar/:nickname', async (req, res) => { //Operación para ver info de un propietario en concreto dado un id
+app.get('/propietarios/buscar/:nickname', async (req, res) => { //Operación para ver info de un propietario en concreto dado un nickname
     const prop = await db('propietarios').select('*').where({ nickname: req.params.nickname }).first(); //Esto realmente podría sobrar ya que el parametro de nickname es UNIQUE, pero no está demás como medida de seguridad
     res.json(prop); //Devuelve la información del propietario cuyo nickname se ha proporcionado
 });
