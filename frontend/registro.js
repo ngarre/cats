@@ -2,7 +2,7 @@ import axios from 'axios'; //Axios es la librería que me permite comunicarme co
 import { notifyError, notifyOk, el } from './documentsUtil.js';
 
 window.addCat = function () { //Programo lo que va a suceder cuando se clica en el botón del formulario para hacer un nuevo registro
-    const nombre = el('nombreReg').value;
+    const nombre = el('nombreReg').value; //Buscas el elemento identificado por "nombreReg" y asignas su valor a la variable
     const edad = el('edadReg').value;
     const raza = el('razaReg').value;
     const propietario = el('propietarioReg').value;
@@ -37,10 +37,8 @@ window.addCat = function () { //Programo lo que va a suceder cuando se clica en 
         el('razaReg').value = '';
         el('propietarioReg').value = '';
     })
-
-
-
 };
+
 
  //Limpiar formulario después de dar al botón limpiar
  window.resetForm = function () {

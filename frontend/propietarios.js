@@ -17,7 +17,7 @@ window.readOwners = function () {
                     <td>${owner.nombre}</td>
                     <td>${owner.edad}</td>
                     <td>${owner.nacionalidad}</td>
-                    <td><a href="javascript:getOwnerCats(${owner.id})" class="btn btn-light btn-sm">Mis Gatos</a></td>
+                    <td><a href="javascript:getOwnerCats(${owner.id})" class="btn btn-light btn-sm">Mis Gatos</a></td> 
                     <td>
                         <div class="d-flex justify-content-center gap-2">
                             <a class="btn btn-primary btn-sm" href="javascript:updateOwnerForm(${owner.id})" title="Editar">

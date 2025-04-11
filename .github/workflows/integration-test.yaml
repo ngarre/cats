@@ -1,0 +1,17 @@
+name: Build & Ejecutar Pruebas de Integración
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Ejecutar pruebas de integración con Docker Compose
+        uses: docker compose -f db/compose.yml up
