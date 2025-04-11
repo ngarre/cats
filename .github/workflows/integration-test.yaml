@@ -15,5 +15,5 @@ jobs:
 
       - name: Ejecutar pruebas de integración con Docker Compose
         run: |
-          cd db
+          cd ../db
           docker compose -f compose.yml up -d
