@@ -14,4 +14,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Ejecutar pruebas de integración con Docker Compose
-        run: docker compose -f ./db/compose.yml up -d
+        run: docker compose -f ./db/compose.yaml up -d
