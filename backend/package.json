@@ -4,7 +4,7 @@
     "scripts": {
         "start": "node src/app.js",
         "test-unit": "jest src/tests/unit_tests",
-        "test-int": "mocha src/tests/integration_tests",
+        "test-int": "mocha src/tests/integration_tests --exit",
         "test": "jest src/tests/unit_tests && mocha src/tests/integration_tests"
     },
     "author": "Natalia Garré",

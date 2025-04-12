@@ -2,7 +2,6 @@ name: db-int-test
 services:
   db:
     build: .
-    container_name: db-to-int-test
     environment:
       MARIADB_DATABASE: 'cats'
       MARIADB_ROOT_PASSWORD: '2025'
