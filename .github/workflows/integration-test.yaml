@@ -24,3 +24,7 @@ jobs:
         working-directory: ./backend
         run: npm run test-int
 
+      - name: Construyo imagen del backend
+        working-directory: ./backend
+        run: docker build -t backend .
+
