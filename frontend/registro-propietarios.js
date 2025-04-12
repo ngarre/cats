@@ -1,6 +1,6 @@
 import axios from 'axios'; //Axios es la librería que me permite comunicarme con el backend
 import { notifyError, notifyOk, el } from './documentsUtil.js';
-
+const backendUrl = process.env.PARCEL_BACKEND_URL || 'http://localhost:8080';
 
 window.addOwner = function () { //Programo lo que va a suceder cuando se clica en el botón del formulario para hacer un nuevo registro
     const nickname = el('nicknameReg').value;
@@ -16,7 +16,7 @@ window.addOwner = function () { //Programo lo que va a suceder cuando se clica e
     }
 
 
-    axios.post('http://localhost:8080/propietarios', {
+    axios.post(`${backendUrl}/propietarios`, {
         nickname: nickname,
         nombre: nombre,
         edad: edad,

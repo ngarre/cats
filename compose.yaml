@@ -1,0 +1,30 @@
+name: db-back-front
+services:
+  db:
+    build: ./db
+    environment: 
+      MARIADB_DATABASE: 'cats'
+      MARIADB_ROOT_PASSWORD: '2025'
+    networks:
+      - app-network
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on: 
+      - "db"
+    networks:
+      - app-network
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      PARCEL_BACKEND_URL: http://backend:8080
+    ports:
+      - "1234:1234"
+    networks:
+      - app-network
+    
+networks: 
+  app-network: 

@@ -1,0 +1,10 @@
+db:
+  client: mysql
+  connection:
+    host: db
+    port: 3306
+    user: root
+    password: '2025'
+    database: cats
+
+port: 8080

@@ -1,5 +1,6 @@
 import axios from 'axios'; //Axios es la librería que me permite comunicarme con el backend
 import { notifyError, notifyOk, el } from './documentsUtil.js';
+const backendUrl = process.env.PARCEL_BACKEND_URL || 'http://localhost:8080';
 
 window.addCat = function () { //Programo lo que va a suceder cuando se clica en el botón del formulario para hacer un nuevo registro
     const nombre = el('nombreReg').value; //Buscas el elemento identificado por "nombreReg" y asignas su valor a la variable
@@ -16,11 +17,11 @@ window.addCat = function () { //Programo lo que va a suceder cuando se clica en 
     }
 
     //Conseguir id del propietario
-    axios.get('http://localhost:8080/propietarios/buscar/' + propietario) //Vamos al endopoint que está en la línea 100 de app.js en el backend para pasarle el nickname del propietario
+    axios.get(`${backendUrl}/propietarios/busca/` + propietario) //Vamos al endopoint que está en la línea 100 de app.js en el backend para pasarle el nickname del propietario
     .then((response) => {
         id_propietario = response.data.id;
 
-        axios.post('http://localhost:8080/gatos', {
+        axios.post(`${backendUrl}/gatos`, {
             nombre: nombre,
             edad: edad,
             raza: raza,

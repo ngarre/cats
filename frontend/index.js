@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { el, icon, notifyOk, notifyError } from './documentsUtil';
-
+const backendUrl = process.env.PARCEL_BACKEND_URL || 'http://localhost:8080'; // Por defecto se coge localhost:8080, pero para crear docker compose se pasa variable de entorno para coger la otra opción
 
 window.readCats = function () {
-    axios.get('http://localhost:8080/gatos')
+    axios.get(`${backendUrl}/gatos`)
         .then((response) => {
             const catList = response.data;
             const catTable = el('tableBody');
@@ -35,7 +35,7 @@ window.readCats = function () {
 
 window.removeCat = function (id) {
     if (confirm('¿Está seguro de que desea eliminar este gatito?')) {
-        axios.delete('http://localhost:8080/gatos/' + id)
+        axios.delete(`${backendUrl}/gatos/` + id)
             .then((response) => {
                 if (response.status == 204) {
                     notifyOk('Gatito eliminado correctamente');
@@ -50,7 +50,7 @@ window.removeCat = function (id) {
 
 window.updateCatForm = function (id) {
     //Obtengo los datos actuales del gato
-    axios.get(`http://localhost:8080/gatos/${id}`).then((response) => {
+    axios.get(`${backendUrl}/gatos/${id}`).then((response) => {
         const cat = response.data;
 
         //Creo el formulario para editar los datos
@@ -106,7 +106,7 @@ window.saveCat = function (id) {
     };
 
     //Realizo la solicitud PUT para actualizar los datos
-    axios.put(`http://localhost:8080/gatos/${id}`, updatedCat)
+    axios.put(`${backendUrl}/gatos/${id}`, updatedCat)
         .then(() => {
             notifyOk('Gatito actualizado correctamente');
             closeForm();

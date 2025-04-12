@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { el, icon, notifyOk, notifyError } from './documentsUtil.js';
-
+const backendUrl = process.env.PARCEL_BACKEND_URL || 'http://localhost:8080';
 
 
 
 window.readOwners = function () {
-    axios.get('http://localhost:8080/propietarios')
+    axios.get(`${backendUrl}/propietarios`)
         .then((response) => {
             const ownerList = response.data;
             const ownerTable = el('tableBody');
@@ -38,7 +38,7 @@ window.readOwners = function () {
 
 window.removeOwner = function (id) {
     if (confirm('¿Está seguro de que desea eliminar este perfil?')) {
-        axios.delete('http://localhost:8080/propietarios/' + id)
+        axios.delete(`${backendUrl}/propietarios` + id)
             .then((response) => {
                 if (response.status == 204) {
                     notifyOk('Perfil eliminado correctamente');
@@ -53,7 +53,7 @@ window.removeOwner = function (id) {
 
 window.updateOwnerForm = function (id) {
     //Obtengo los datos actuales del propietario
-    axios.get('http://localhost:8080/propietarios/' + id).then((response) => {
+    axios.get(`${backendUrl}/propietarios` + id).then((response) => {
         const owner = response.data;
 
         //Creo el formulario para editar los datos
@@ -107,7 +107,7 @@ window.saveOwner = function (id) {
     };
 
     //Realizo la solicitud PUT para actualizar los datos
-    axios.put(`http://localhost:8080/propietarios/${id}`, updatedOwner)
+    axios.put(`${backendUrl}/propietarios${id}`, updatedOwner)
         .then(() => {
             notifyOk('Propietario actualizado correctamente');
             closeForm();
@@ -128,7 +128,7 @@ window.closeForm = function () {
 };
 
 window.getOwnerCats = function (id) {
-    axios.get('http://localhost:8080/propietarios/' + id + '/gatos')
+    axios.get(`${backendUrl}/propietarios` + id + '/gatos')
         .then((response) => {
             const catList = response.data;
 

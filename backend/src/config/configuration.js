@@ -8,6 +8,9 @@ let configFile = 'config.prod.yaml';
 if (process.env.NODE_ENV === 'test') {
    configFile = 'config.test.yaml';
 }
+if (process.env.NODE_ENV === 'docker') {
+    configFile = 'config.docker.yaml';
+}
 
 /* Lee el fichero de configuración
 let configFile = 'config.prod.yaml';
