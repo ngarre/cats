@@ -16,10 +16,11 @@ jobs:
       - name: Levantar base de datos que tiene datos de prueba
         run: docker compose -f ./db/compose.yaml up -d
 
-      - name: Instalar dependencias
+      - name: Entrar al backend e instalar dependencias
+        working-directory: ./backend
         run: npm install
 
       - name: Ejecuto test de integracion
+        working-directory: ./backend
         run: npm run test-int
 
-        
