@@ -7,6 +7,8 @@ services:
       MARIADB_ROOT_PASSWORD: '2025'
     networks:
       - app-network
+    ports: 
+      - "3306:3306"
   backend:
     build:
       context: ./backend
@@ -15,12 +17,16 @@ services:
       - "db"
     networks:
       - app-network
+    environment:
+      NODE_ENV: docker
+    ports: 
+      - "8080:8080"
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     environment:
-      PARCEL_BACKEND_URL: http://backend:8080
+      PARCEL_BACKEND_URL: 'http://localhost:8080'
     ports:
       - "1234:1234"
     networks:

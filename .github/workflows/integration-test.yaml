@@ -34,3 +34,8 @@ jobs:
         working-directory: ./frontend
         run: docker build -t frontend .
 
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@<action version> # Ex: v4.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
