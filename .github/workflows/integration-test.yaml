@@ -10,8 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: GitHub accede al codigo de mi aplicacion
         uses: actions/checkout@v4
 
-      - name: Ejecutar pruebas de integración con Docker Compose
+      - name: Levantar base de datos que tiene datos de prueba
         run: docker compose -f ./db/compose.yaml up -d
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecuto test de integracion
+        run: npm run test-int
+
+        
