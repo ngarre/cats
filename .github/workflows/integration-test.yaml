@@ -23,6 +23,8 @@ jobs:
       - name: Ejecuto test de integracion
         working-directory: ./backend
         run: npm run test-int
+        env: 
+          NODE_ENV: test
 
       - name: Construyo imagen del backend
         working-directory: ./backend
