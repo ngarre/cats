@@ -5,7 +5,7 @@ const knex = require('knex'); //Librería de JavaScript para Node.js que sirve c
 const { config } = require('./config/configuration');
 
 
-const gatoRoutes = require('./routes/gatoROutes');
+const gatoRoutes = require('./routes/gatoRoutes');
 const propietarioRoutes = require('./routes/propietarioRoutes');
 
 const app = express();
