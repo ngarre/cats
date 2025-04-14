@@ -26,7 +26,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     environment:
-      PARCEL_BACKEND_URL: 'http://backend:8080'
+      PARCEL_BACKEND_URL: 'http://127.0.0.1:8080'
     ports:
       - "1234:1234"
     networks:
