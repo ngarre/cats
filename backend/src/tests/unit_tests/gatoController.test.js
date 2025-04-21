@@ -24,7 +24,7 @@ const getMockReqRes = () => {
 describe('Gato Controller', () => {
 
     afterEach(() => {
-        jest.clearAllMocks();
+        jest.clearAllMocks(); // Asegura que los mocks se reinicien después de cada test para que no afecten a los siguientes
     });
 
     describe('getAll', () => {

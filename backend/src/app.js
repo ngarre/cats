@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//Lanzar BBDD (DB Browser for SQLite)
+// Antes: Lanzar BBDD (DB Browser for SQLite) Ahora en produccion lanzar BBDD en MariaDB (MySQL)
 const db = knex({
     client: config.db.client,
     connection: {
@@ -33,7 +33,7 @@ app.use('/gatos', gatoRoutes);
 app.use('/propietarios', propietarioRoutes);
 
 
-//--------------------Abro un servidor en el puerto 8080-------------------------------------
+//--------------------Abro un servidor en el puerto 8080 (ahora definido en config)-------------------------------------
 
 app.listen(config.port, () => {
     console.log("El backend se ha iniciado");

@@ -1,10 +1,8 @@
 const propietarioController = require('../../controllers/propietarioController');
 const propietarioService = require('../../services/propietarioService');
-const gatoService = require('../../services/gatoService');
 const { validationResult } = require('express-validator');
 
 jest.mock('../../services/propietarioService');
-jest.mock('../../services/gatoService');
 jest.mock('express-validator', () => ({
     validationResult: jest.fn()
 }));
