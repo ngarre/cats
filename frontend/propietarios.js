@@ -128,7 +128,7 @@ window.closeForm = function () {
 };
 
 window.getOwnerCats = function (id) {
-    axios.get(`${backendUrl}/propietarios` + id + '/gatos')
+    axios.get(`${backendUrl}/propietarios/` + id + '/gatos')
         .then((response) => {
             const catList = response.data;
 
