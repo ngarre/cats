@@ -38,7 +38,7 @@ window.readOwners = function () {
 
 window.removeOwner = function (id) {
     if (confirm('¿Está seguro de que desea eliminar este perfil?')) {
-        axios.delete(`${backendUrl}/propietarios` + id)
+        axios.delete(`${backendUrl}/propietarios/` + id)
             .then((response) => {
                 if (response.status == 204) {
                     notifyOk('Perfil eliminado correctamente');
@@ -53,7 +53,7 @@ window.removeOwner = function (id) {
 
 window.updateOwnerForm = function (id) {
     //Obtengo los datos actuales del propietario
-    axios.get(`${backendUrl}/propietarios` + id).then((response) => {
+    axios.get(`${backendUrl}/propietarios/${id}`).then((response) => {
         const owner = response.data;
 
         //Creo el formulario para editar los datos
@@ -107,7 +107,7 @@ window.saveOwner = function (id) {
     };
 
     //Realizo la solicitud PUT para actualizar los datos
-    axios.put(`${backendUrl}/propietarios${id}`, updatedOwner)
+    axios.put(`${backendUrl}/propietarios/${id}`, updatedOwner)
         .then(() => {
             notifyOk('Propietario actualizado correctamente');
             closeForm();
@@ -131,7 +131,6 @@ window.getOwnerCats = function (id) {
     axios.get(`${backendUrl}/propietarios/` + id + '/gatos')
         .then((response) => {
             const catList = response.data;
-
             //Busca el contenedor principal
             const container = document.querySelector('.container');
             if (!container) {
