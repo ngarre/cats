@@ -16,33 +16,37 @@ window.addCat = function () { //Programo lo que va a suceder cuando se clica en 
         return; // Detenemos la ejecución si el nombre está vacío
     }
 
+
     //Conseguir id del propietario
-    axios.get(`${backendUrl}/propietarios/busca/` + propietario) //Vamos al endopoint que está en la línea 100 de app.js en el backend para pasarle el nickname del propietario
-    .then((response) => {
-        id_propietario = response.data.id;
+    axios.get(`${backendUrl}/propietarios/buscar/` + propietario) //Vamos al endopoint que está en la línea 100 de app.js en el backend para pasarle el nickname del propietario
+        .then((response) => {
+            id_propietario = response.data.propietario.id;
 
-        axios.post(`${backendUrl}/gatos`, {
-            nombre: nombre,
-            edad: edad,
-            raza: raza,
-            propietario: propietario,
-            id_propietario: id_propietario
-        });
+            axios.post(`${backendUrl}/gatos`, {
+                nombre: nombre,
+                edad: edad,
+                raza: raza,
+                propietario: propietario,
+                id_propietario: id_propietario
+            });
 
-        //Decir al usuario si la entrada ha tenido lugar
-        notifyOk('Gatito registrado');
+            //Decir al usuario si la entrada ha tenido lugar
+            notifyOk('Gatito registrado');
 
-        //Limpiar el formulario después de registrar nueva entrada:
-        el('nombreReg').value = '';
-        el('edadReg').value = '';
-        el('razaReg').value = '';
-        el('propietarioReg').value = '';
-    })
+            //Limpiar el formulario después de registrar nueva entrada:
+            el('nombreReg').value = '';
+            el('edadReg').value = '';
+            el('razaReg').value = '';
+            el('propietarioReg').value = '';
+        })
 };
 
 
- //Limpiar formulario después de dar al botón limpiar
- window.resetForm = function () {
+
+
+
+//Limpiar formulario después de dar al botón limpiar
+window.resetForm = function () {
     el('nombreReg').value = '';
     el('edadReg').value = '';
     el('razaReg').value = '';

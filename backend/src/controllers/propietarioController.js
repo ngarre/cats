@@ -14,11 +14,23 @@ module.exports = {
         res.json(propietarios);
     },
 
-    getByNickname: async (req, res) => {
+   /* getByNickname: async (req, res) => {
         const db = req.app.locals.db;
         const propietarios = await propietarioService.getByNickname(db, req.params.nickname);
         res.json(propietarios);
+    }, */
+
+    getByNickname: async (req, res) => {
+        const db = req.app.locals.db;
+        const propietario = await propietarioService.getByNickname(db, req.params.nickname);
+    
+        if (propietario === null) {
+            return res.status(404).json({ error: 'Propietario no encontrado' });
+        }
+    
+        res.json({ propietario });
     },
+    
 
     create: async (req, res) => {
         const db = req.app.locals.db;
