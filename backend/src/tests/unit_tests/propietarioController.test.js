@@ -63,7 +63,7 @@ describe('Propietario Controller', () => {
 
             await propietarioController.getByNickname(req, res);
 
-            expect(res.json).toHaveBeenCalledWith(propietarioFake);
+            expect(res.json).toHaveBeenCalledWith({ propietario: propietarioFake });
         });
     });
 
